@@ -78,12 +78,25 @@ public:
         while (current != m_tail)
         {
             current = current->next;
+
             delete extractPrev(current);
        
 
         }
     }
 
+    void Print() 
+    {
+        auto current = m_head;
+        int index = 0;
+        unsigned long Ssize = this->Size();
+        while (Ssize != 0)
+        {
+            Ssize--;
+            current = current->next;
+            std::cout << "index: " << index << " " << "value:" << " " << current->value << "\n";
+        }
+    }
 private:
     ListNode* extractPrev(ListNode* node)
     {
@@ -101,41 +114,86 @@ private:
 };
 
 TEST_CASE("Testing", "List") {
-
-    SECTION("Test Empty")
+    std::cout << "\n";
+    SECTION("PushFront")
     {
-        List MyList;
-        INFO("List is not empty\n");
-        CHECK(MyList.Empty());
-
-    }
-
-    SECTION("Test size")
-    {
-       
         List MyList;
         MyList.PushFront(1);
-        INFO("Expected size: 1, Actual size: " << MyList.Size());
-        CHECK(MyList.Size() == 1);
+        MyList.PushFront(2);
+        MyList.PushFront(3);
+        std::cout << "PushFront SECTION\n";
+        MyList.Print();
+        std::cout << "Size: " << MyList.Size() << "\n";
+        CHECK(MyList.Size() == 3);
     }
-
-    SECTION("Test clear")
+    std::cout << "\n";
+    SECTION("PushBack")
     {
-
         List MyList;
-        MyList.PushFront(1);
-        INFO("Expected size: 1, Actual size: " << MyList.Size());
-        CHECK(MyList.Size() == 1);
+        MyList.PushBack(1);
+        MyList.PushBack(2);
         MyList.PushBack(3);
-        MyList.PushBack(4);
-        MyList.PushBack(5);
-        MyList.PushBack(6);
-        MyList.PushBack(7);
-        MyList.Clear();
-        INFO("Expected size: 0, Actual size: " << MyList.Size());
-        CHECK(MyList.Size() == 0);
-        
+        std::cout << "PushBack SECTION\n";
+        MyList.Print();
+        std::cout << "Size: " << MyList.Size() << "\n";
+        CHECK(MyList.Size() == 3);
+    }
 
+    SECTION("PopBack")
+    {
+        std::cout << "PopBack SECTION\n";
+        List MyList;
+        MyList.PushBack(1);
+        MyList.PushBack(2);
+        MyList.PushBack(3);
+        std::cout << "Begin: \n";
+        MyList.Print();
+        int CounterOfDelete = 1;
+        unsigned long counter = MyList.Size();
+        while (counter--) 
+        {
+            
+            MyList.PopBack();
+
+            std::cout << "\nDeleting a number: " << CounterOfDelete++ << "\n";
+            if (MyList.Empty()) {
+                std::cout << "Empty List\n";
+                continue;
+            }
+            
+            MyList.Print();
+
+        }
+        CHECK(MyList.Empty());
+      
+    }
+
+    SECTION("PopFront")
+    {
+        std::cout << "PopFront SECTION\n";
+        List MyList;
+        MyList.PushFront(1);
+        MyList.PushFront(2);
+        MyList.PushFront(3);
+        std::cout << "Begin: \n";
+        MyList.Print();
+        int CounterOfDelete = 1;
+        unsigned long counter = MyList.Size();
+        while (counter--)
+        {
+
+            MyList.PopFront();
+
+            std::cout << "\nDeleting a number: " << CounterOfDelete++ << "\n";
+            if (MyList.Empty()) {
+                std::cout << "Empty List\n";
+                continue;
+            }
+
+            MyList.Print();
+
+        }
+        CHECK(MyList.Empty());
 
     }
     
